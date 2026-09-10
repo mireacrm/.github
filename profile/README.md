@@ -39,19 +39,38 @@ flowchart TD
 ### Асинхронный контур
 
 Всё, что меняет состояние и что нельзя потерять, расходится событиями через
-topic-обменник RabbitMQ. События тонкие: несут идентификаторы, а не снимки.
+topic-обменник. События тонкие: несут идентификаторы, а не снимки — детали
+потребитель дозапрашивает сам.
 
 ```mermaid
-flowchart LR
-    BOOK[booking-service] ==>|визит завершён| MQ{{RabbitMQ}}
-    MQ ==>|списать расходники| INV[inventory-service]
-    MQ ==>|выставить счёт| BILL[billing-service]
-    MQ ==>|уведомить| NOTIF[notification-service]
-    MQ -.->|подписка на все события| ANA[analytics-service]
+flowchart TB
+    subgraph pub [Публикуют]
+        BOOK[booking-service]
+        INV[inventory-service]
+        BILL[billing-service]
+    end
+
+    pub --> EX{{"mirea.events · topic"}}
+
+    EX -->|appointment.completed| QI[["inventory-service.events"]]
+    EX -->|appointment.completed| QB[["billing-service.events"]]
+    EX -->|"appointment.created · appointment.cancelled<br/>stock.low · invoice.issued"| QN[["notification-service.events"]]
+    EX -->|"# — весь поток"| QA[["analytics-service.events"]]
+
+    QI -.-> DLX
+    QB -.-> DLX
+    QN -.-> DLX
+    QA -.->|"после 10 неудачных попыток"| DLX{{"mirea.events.dlx · fanout"}}
+    DLX --> DEAD[["mirea.events.dead"]]
 ```
 
-Повторы ограничены пятью попытками с растущей паузой, дальше событие ложится
-в очередь разбора.
+Очередь читает сервис одноимённый с ней. Все они quorum-типа с ограничением
+в десять доставок: сообщение, которое не удалось обработать, не крутится
+вечно, а уходит через fanout-обменник в очередь разбора.
+
+Завершение визита расходится на **троих**: списание расходников, выставление
+счёта и аналитику. Уведомления живут на других ключах — их интересует
+создание и отмена записи, выставленный счёт и низкий остаток.
 
 ### Живые обновления
 
