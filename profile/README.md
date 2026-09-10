@@ -22,17 +22,18 @@ CRM для салонов красоты: записи к специалиста
 ```mermaid
 flowchart TD
     U([Браузер]) -->|REST| GW[gateway]
-    GW -->|REST| ALL[все девять сервисов]
+    GW -->|REST| SVC
 
-    CORE[core-service] ~~~ CAT[catalog-service]
-
-    BOOK[booking-service] -->|слоты и цены| CAT
-    BOOK -->|филиал и мастер| CORE
-    INV[inventory-service] -->|нормативы расхода| CAT
-    NOTIF[notification-service] -->|контакты| CLI[client-service]
-    BILL[billing-service] -->|что за визит| BOOK
-    BILL -->|кто клиент| CLI
-    ANA[analytics-service] -->|оргструктура| CORE
+    subgraph SVC [Девять сервисов, между собой по gRPC]
+        direction TB
+        BOOK[booking-service] -->|слоты и цены| CAT[catalog-service]
+        BOOK -->|филиал и мастер| CORE[core-service]
+        INV[inventory-service] -->|нормативы расхода| CAT
+        NOTIF[notification-service] -->|контакты| CLI[client-service]
+        BILL[billing-service] -->|что за визит| BOOK
+        BILL -->|кто клиент| CLI
+        ANA[analytics-service] -->|оргструктура| CORE
+    end
 ```
 
 ### Асинхронный контур
@@ -43,10 +44,10 @@ topic-обменник RabbitMQ. События тонкие: несут иде�
 ```mermaid
 flowchart LR
     BOOK[booking-service] ==>|визит завершён| MQ{{RabbitMQ}}
-    MQ ==> INV[inventory-service<br/><i>списать расходники</i>]
-    MQ ==> BILL[billing-service<br/><i>выставить счёт</i>]
-    MQ ==> NOTIF[notification-service<br/><i>уведомить</i>]
-    MQ -.->|подписка на #| ANA[analytics-service<br/><i>видит весь поток</i>]
+    MQ ==>|списать расходники| INV[inventory-service]
+    MQ ==>|выставить счёт| BILL[billing-service]
+    MQ ==>|уведомить| NOTIF[notification-service]
+    MQ -.->|подписка на все события| ANA[analytics-service]
 ```
 
 Повторы ограничены пятью попытками с растущей паузой, дальше событие ложится
