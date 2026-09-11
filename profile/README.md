@@ -1,6 +1,9 @@
 <div align="center">
 
-<img alt="Mirea CRM" src="https://capsule-render.vercel.app/api?type=waving&color=0%3A1F6FEB%2C100%3A00ADD8&height=190&section=header&text=Mirea%20CRM&fontSize=58&fontColor=ffffff&fontAlignY=34&desc=%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BD%D0%B0%D1%8F%20CRM%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B5%D1%82%D0%B8%20%D1%81%D0%B0%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D1%82%D1%8B&descAlignY=55&descSize=17&reversal=false&animation=fadeIn" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-dark.svg?v=2">
+  <img alt="Mirea CRM — микросервисная CRM: записи, услуги, склад, филиалы" src="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-light.svg?v=2" width="100%">
+</picture>
 
 <img alt="девять микросервисов · REST · gRPC · RabbitMQ · NATS" src="https://readme-typing-svg.demolab.com?font=JetBrains%20Mono&size=19&duration=2800&pause=700&color=58A6FF&center=true&vCenter=true&width=820&height=46&repeat=true&lines=%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8C%20%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2%20%D0%BD%D0%B0%20Python%20%D0%B8%20Go%3BREST%20%D0%BD%D0%B0%D1%80%D1%83%D0%B6%D1%83%20%C2%B7%20gRPC%20%D0%B2%D0%BD%D1%83%D1%82%D1%80%D1%8C%20%C2%B7%20%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F%20%D0%B2%20RabbitMQ%20%C2%B7%20%D1%8D%D1%84%D0%B5%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D0%B2%20NATS%3B%D0%BF%D1%8F%D1%82%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C%20%D1%80%D0%B5%D0%BF%D0%BE%D0%B7%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B5%D0%B2%20%D0%B8%20%D0%BE%D0%B4%D0%B8%D0%BD%20docker%20compose%20up%20-d">
 
