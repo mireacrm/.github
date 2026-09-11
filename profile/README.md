@@ -1,11 +1,9 @@
 <div align="center">
 
-<h1>Mirea&nbsp;CRM</h1>
-
-<p>
-<b>Микросервисная CRM для сети салонов красоты.</b><br>
-Записи к специалистам, каталог услуг, складской учёт расходников, филиальная структура.
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-dark.svg">
+  <img alt="Mirea CRM — микросервисная CRM для сети салонов красоты" src="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-light.svg" width="100%">
+</picture>
 
 <p>
 <img alt="Python 3.12" src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&style=for-the-badge&logoColor=white">
@@ -36,11 +34,12 @@
 
 <p>
 <a href="#архитектура">Архитектура</a> ·
+<a href="#сценарий-завершение-визита">Сценарий</a> ·
+<a href="#поведение-под-сбоем">Сбои</a> ·
 <a href="#сводная-схема">Сводная схема</a> ·
 <a href="#репозитории">Репозитории</a> ·
 <a href="#запуск">Запуск</a> ·
-<a href="#контракты-прежде-реализации">Контракты</a> ·
-<a href="#устройство-сервиса">Устройство сервиса</a>
+<a href="#контракты-прежде-реализации">Контракты</a>
 </p>
 
 </div>
@@ -113,9 +112,28 @@ flowchart TB
 с ограничением в десять доставок: сообщение, которое не удалось обработать,
 не повторяется бесконечно, а уходит через fanout-обменник в очередь разбора.
 
-Событие `appointment.completed` обрабатывают три потребителя: списание
-расходников, выставление счёта и аналитика. Уведомления подписаны на другие
-ключи — создание и отмена записи, выставленный счёт, низкий остаток.
+<details>
+<summary><b>Каталог доменных событий</b> — восемь ключей маршрутизации</summary>
+
+<br>
+
+| Ключ | Публикует | Потребители |
+|---|---|---|
+| `appointment.created` | `booking-service` | `notification-service` · `analytics-service` |
+| `appointment.completed` | `booking-service` | `inventory-service` · `billing-service` · `analytics-service` |
+| `appointment.cancelled` | `booking-service` | `notification-service` · `analytics-service` |
+| `consumables.written_off` | `inventory-service` | `analytics-service` |
+| `stock.low` | `inventory-service` | `notification-service` · `analytics-service` |
+| `invoice.issued` | `billing-service` | `notification-service` · `analytics-service` |
+| `invoice.paid` | `billing-service` | `analytics-service` |
+| `client.registered` | `client-service` | `analytics-service` |
+
+Очередь аналитики связана с обменником по `#` и получает весь поток: отчёты
+считаются по событиям, а не опросом чужих баз. Каждое событие описано
+сообщением в [`proto`](https://github.com/mireacrm/proto) и приходит
+потребителю как разобранный конверт, а не как свободный JSON.
+
+</details>
 
 ### Живые обновления: NATS
 
@@ -146,6 +164,65 @@ durable-очереди и подтверждения. NATS отвечает за
 
 Проекту такого масштаба хватило бы и одного брокера. Второй введён, чтобы
 развести оба класса задач явно, и снимается без изменений доменной логики.
+
+## Сценарий: завершение визита
+
+Один запрос мастера задевает пять сервисов, два транспорта и три базы.
+Ни одного распределённого транзакционного менеджера при этом нет.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor M as Мастер
+    participant GW as gateway
+    participant BOOK as booking
+    participant EX as mirea.events
+    participant INV as inventory
+    participant CAT as catalog
+    participant BILL as billing
+    participant NOTIF as notification
+
+    M->>GW: POST /appointments/{id}/complete · JWT
+    GW->>GW: подпись токена, роли из Keycloak
+    GW->>BOOK: завершить визит
+    BOOK->>BOOK: UPDATE … WHERE status = 'scheduled'
+    BOOK--)EX: appointment.completed
+
+    par Материалы
+        EX--)INV: appointment.completed
+        INV->>CAT: нормативы расхода услуги
+        INV->>INV: движения по складу, идемпотентно по event_id
+        INV--)EX: consumables.written_off · stock.low
+    and Деньги
+        EX--)BILL: appointment.completed
+        BILL->>BOOK: цена визита
+        BILL->>BILL: счёт и комиссия мастера
+        BILL--)EX: invoice.issued
+    end
+
+    EX--)NOTIF: invoice.issued · stock.low
+    NOTIF->>NOTIF: письмо клиенту и администратору
+```
+
+Событие несёт только идентификаторы, поэтому `billing` спрашивает цену
+у `booking`, а `inventory` — нормативы у `catalog`. Снимок данных в событии
+избавил бы от двух вызовов, но означал бы, что цена визита существует
+в системе в двух местах сразу.
+
+## Поведение под сбоем
+
+Потребитель может упасть, событие может прийти дважды, два запроса могут
+прийти одновременно. Разбирается это в базе и в обвязе, а не в доменном коде
+каждого сервиса.
+
+| Что случилось | Что делает система |
+|---|---|
+| Обработчик упал на событии | Сообщение возвращается в очередь, пауза — `0,5 с × номер попытки`, но не больше пяти секунд |
+| Десять неудач подряд | Сообщение уходит через fanout-обменник в `mirea.events.dead` и ждёт разбора руками |
+| Событие доставлено дважды | `event_id` вставляется в `processed_events` в одной транзакции с эффектом; повтор получает конфликт и завершается без действия |
+| Две записи на один слот | Ограничение `EXCLUDE USING gist` по мастеру и диапазону времени: гонку разрешает Postgres, а не проверка в коде |
+| Две одновременные оплаты счёта | Условный `UPDATE … WHERE status = 'issued'`: побеждает один запрос, второй получает конфликт, а не молчаливый успех |
+| Брокер недоступен при публикации | Сбой публикации логируется и не откатывает уже принятое доменное решение — визит остаётся завершённым |
 
 ## Сводная схема
 
