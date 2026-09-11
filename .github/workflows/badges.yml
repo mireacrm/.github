@@ -1,0 +1,43 @@
+# Пересчёт живых значков профиля организации.
+#
+# Значки берут значения не из текста README, а из profile/badges/*.json:
+# состояние конвейеров всех девяти сервисов, число тестов и доли языков.
+# Раз в сутки — компромисс: чаще незачем, реже значок «9/9 зелёных» рискует
+# врать после красной сборки в соседнем репозитории.
+
+name: Значки
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  badges:
+    name: Пересчитать
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Собрать значения
+        # Токен нужен не для доступа — репозитории публичные, — а ради лимита:
+        # без него шестьдесят запросов в час кончаются на середине прогона.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 profile/badges.py
+
+      - name: Закоммитить изменившееся
+        run: |
+          if [ -z "$(git status --porcelain profile/badges)" ]; then
+            echo "значения не изменились"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/badges
+          git commit -m "Значки профиля пересчитаны"
+          git push

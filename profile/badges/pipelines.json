@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "label": "конвейеры",
+  "message": "9/9 зелёных",
+  "color": "brightgreen",
+  "labelColor": "24292F",
+  "style": "flat-square",
+  "cacheSeconds": 3600
+}

@@ -1,27 +1,16 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-dark.svg">
-  <img alt="Mirea CRM — микросервисная CRM для сети салонов красоты" src="https://raw.githubusercontent.com/mireacrm/.github/main/profile/assets/hero-light.svg" width="100%">
-</picture>
+<img alt="Mirea CRM" src="https://capsule-render.vercel.app/api?type=waving&color=0%3A1F6FEB%2C100%3A00ADD8&height=190&section=header&text=Mirea%20CRM&fontSize=58&fontColor=ffffff&fontAlignY=34&desc=%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BD%D0%B0%D1%8F%20CRM%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B5%D1%82%D0%B8%20%D1%81%D0%B0%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20%D0%BA%D1%80%D0%B0%D1%81%D0%BE%D1%82%D1%8B&descAlignY=55&descSize=17&reversal=false&animation=fadeIn" width="100%">
+
+<img alt="девять микросервисов · REST · gRPC · RabbitMQ · NATS" src="https://readme-typing-svg.demolab.com?font=JetBrains%20Mono&size=19&duration=2800&pause=700&color=58A6FF&center=true&vCenter=true&width=820&height=46&repeat=true&lines=%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8C%20%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2%20%D0%BD%D0%B0%20Python%20%D0%B8%20Go%3BREST%20%D0%BD%D0%B0%D1%80%D1%83%D0%B6%D1%83%20%C2%B7%20gRPC%20%D0%B2%D0%BD%D1%83%D1%82%D1%80%D1%8C%20%C2%B7%20%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F%20%D0%B2%20RabbitMQ%20%C2%B7%20%D1%8D%D1%84%D0%B5%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B5%20%D0%B2%20NATS%3B%D0%BF%D1%8F%D1%82%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C%20%D1%80%D0%B5%D0%BF%D0%BE%D0%B7%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B5%D0%B2%20%D0%B8%20%D0%BE%D0%B4%D0%B8%D0%BD%20docker%20compose%20up%20-d">
+
+<img alt="Python · Go · FastAPI · gRPC · PostgreSQL · RabbitMQ · Docker · Keycloak · Prometheus · Grafana · Jaeger · GitHub Actions" src="https://go-skill-icons.vercel.app/api/icons?i=py%2Cgo%2Cfastapi%2Cgrpc%2Cpostgres%2Crabbitmq%2Cdocker%2Ckeycloak%2Cprometheus%2Cgrafana%2Cjaeger%2Cgithubactions&perline=12">
 
 <p>
-<img alt="Python 3.12" src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&style=for-the-badge&logoColor=white">
-<img alt="Go 1.26" src="https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&style=for-the-badge&logoColor=white">
-<img alt="gRPC" src="https://img.shields.io/badge/gRPC-protobuf-2E86AB?style=for-the-badge&logoColor=white">
-<img alt="RabbitMQ 3.13" src="https://img.shields.io/badge/RabbitMQ-3.13-FF6600?logo=rabbitmq&style=for-the-badge&logoColor=white">
-<img alt="NATS 2.10" src="https://img.shields.io/badge/NATS-2.10-27AAE1?logo=natsdotio&style=for-the-badge&logoColor=white">
-</p>
-
-<p>
-<img alt="PostgreSQL 16" src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&style=flat-square&logoColor=white">
-<img alt="Keycloak 26" src="https://img.shields.io/badge/Keycloak-26-008AAA?logo=keycloak&style=flat-square&logoColor=white">
-<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&style=flat-square&logoColor=white">
-<img alt="Docker Compose" src="https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker&style=flat-square&logoColor=white">
-<img alt="OpenTelemetry" src="https://img.shields.io/badge/OpenTelemetry-425CC7?logo=opentelemetry&style=flat-square&logoColor=white">
-<img alt="Prometheus" src="https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&style=flat-square&logoColor=white">
-<img alt="Grafana" src="https://img.shields.io/badge/Grafana-F46800?logo=grafana&style=flat-square&logoColor=white">
-<img alt="Jaeger" src="https://img.shields.io/badge/Jaeger-66CFE3?logo=jaeger&style=flat-square&logoColor=white">
+<img alt="состояние конвейеров" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmireacrm%2F.github%2Fmain%2Fprofile%2Fbadges%2Fpipelines.json">
+<img alt="число тестов" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmireacrm%2F.github%2Fmain%2Fprofile%2Fbadges%2Ftests.json">
+<img alt="доли языков" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmireacrm%2F.github%2Fmain%2Fprofile%2Fbadges%2Flanguages.json">
+<img alt="практическая работа, МИРЭА" src="https://img.shields.io/badge/%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D0%9C%D0%98%D0%A0%D0%AD%D0%90-1F6FEB?style=flat-square&labelColor=24292F">
 </p>
 
 <p>
@@ -29,7 +18,15 @@
 <img alt="15 репозиториев" src="https://img.shields.io/badge/%D1%80%D0%B5%D0%BF%D0%BE%D0%B7%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%B5%D0%B2-15-1F6FEB?style=flat-square&labelColor=24292F">
 <img alt="7 баз" src="https://img.shields.io/badge/%D0%B1%D0%B0%D0%B7-7-1F6FEB?style=flat-square&labelColor=24292F">
 <img alt="4 транспорта" src="https://img.shields.io/badge/%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0-4-1F6FEB?style=flat-square&labelColor=24292F">
-<img alt="МИРЭА" src="https://img.shields.io/badge/%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%9C%D0%98%D0%A0%D0%AD%D0%90-1F6FEB?style=flat-square&labelColor=24292F">
+</p>
+
+<p>
+<img alt="Python 3.12" src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&style=flat-square&logoColor=white">
+<img alt="Go 1.26" src="https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&style=flat-square&logoColor=white">
+<img alt="PostgreSQL 16" src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&style=flat-square&logoColor=white">
+<img alt="RabbitMQ 3.13" src="https://img.shields.io/badge/RabbitMQ-3.13-FF6600?logo=rabbitmq&style=flat-square&logoColor=white">
+<img alt="NATS 2.10" src="https://img.shields.io/badge/NATS-2.10-27AAE1?logo=natsdotio&style=flat-square&logoColor=white">
+<img alt="Keycloak 26" src="https://img.shields.io/badge/Keycloak-26-008AAA?logo=keycloak&style=flat-square&logoColor=white">
 </p>
 
 <p>
@@ -46,9 +43,13 @@
 
 ---
 
-Учебный проект по курсу «Микросервисная архитектура» (МИРЭА). Система
-поднимается одной командой и работает целиком: девять сервисов на Python и Go,
-четыре транспорта, пятнадцать репозиториев.
+Практические работы по курсу «Микросервисная архитектура» (МИРЭА),
+доведённые до состояния системы: девять сервисов на Python и Go, четыре
+транспорта, пятнадцать репозиториев, всё поднимается одной командой.
+
+Значки состояния выше не нарисованы: конвейеры, число тестов и доли языков
+пересчитывает работа [`badges.yml`](https://github.com/mireacrm/.github/actions/workflows/badges.yml)
+по расписанию и кладёт в репозиторий профиля.
 
 ## Архитектура
 
@@ -321,7 +322,10 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Образы берутся готовыми из `ghcr.io/mireacrm/*`, собирать ничего не нужно.
+> [!TIP]
+> Образы берутся готовыми из `ghcr.io/mireacrm/*` — собирать ничего не нужно,
+> первый запуск упирается только в скорость сети.
+
 Когда стенд поднялся, доступны:
 
 | Адрес | Что это |
@@ -358,3 +362,9 @@ proto v0.1.1  ─┬─→  contracts-go v0.1.1  ─→  go-common  ─→  се
 
 Интеграционные тесты выполняются против Postgres, RabbitMQ, NATS и Keycloak,
 поднятых в прогоне, а не против заглушек.
+
+<div align="center">
+
+<img alt="" src="https://capsule-render.vercel.app/api?type=waving&color=0%3A00ADD8%2C100%3A1F6FEB&height=110&section=footer" width="100%">
+
+</div>
